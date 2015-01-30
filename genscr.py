@@ -1,6 +1,21 @@
+#The script reads a python script for a qm calculation in ase using gpaw in lcao mode
+#and generates a series of new script with modified fields for basis set, h spacing,
+#name of output files 
+
+#Sample of input file containing the parameters to modify:
+#------------------------------------------------------------
+#sz
+#sz(dzp)
+#szp
+#
+#Progression=art
+#First term         Number of terms to generate          Ratio
+#0.150              3                                    1.1
+#-------------------------------------------------------------
+
 import sys
 import string
-import prog1
+import prog
 usage='Usage: %s qmscr param' % sys.argv[0]
 
 try:
@@ -18,9 +33,9 @@ for n,line in enumerate(p):
   if 'Progression' in line:
     sp=[float(x) for x in p[n+2].split()] 
     if 'geom' in line:
-      h=prog1.geomprog(sp[0], sp[1], sp[2])
+      h=prog.geomprog(sp[0], sp[1], sp[2])
     elif 'art' in line:
-      h=prog1.artprog(sp[0], sp[1], sp[2])
+      h=prog.artprog(sp[0], sp[1], sp[2])
     p[:n-1]=[basis.strip() for basis in p[:n-1]]
     bnames=p[:n-1]
     bnames=[basis.replace('(', '') for basis in bnames]
