@@ -16,10 +16,10 @@
 import sys
 import string
 import prog
-usage='Usage: %s qmscr param' % sys.argv[0]
+usage='Usage: %s qmscr param pos' % sys.argv[0]
 
 try:
-  qmscr=sys.argv[1]; param=sys.argv[2]
+  qmscr=sys.argv[1]; param=sys.argv[2]; pos=sys.argv[3]
 except:
   print usage; sys.exit(1)
 
@@ -28,6 +28,9 @@ lines=scr.readlines(); scr.close()
 
 pr=open(param, 'r')
 p=pr.readlines(); pr.close()  
+
+coord=open(pos, 'r')
+positions=coord.readlines(); coord.close()
 
 for n,line in enumerate(p):
   if 'Progression' in line:
@@ -47,8 +50,11 @@ for n,line in enumerate(p):
 
 for name in b: 
   for k in range(len(h)):
+    xyz=open(qmscr+'_%s_%.3f.xyz' %  (name, h[k]), 'w')
+    xyz.writelines(positions)
     nlines=lines    
     scrpy=open(qmscr+'_%s_%.3f.py' %  (name, h[k]), 'w')   
+    nlines=[string.replace("molecule=read()", "molecule=read('"+qmscr+"_%s_%.3f.xyz')" % (name, h[k])) for string in nlines]
     nlines=[string.replace('basis=', "basis='%s'" % (b[name])) for string in nlines]
     nlines=[string.replace('h=', 'h=%.3f' % (h[k])) for string in nlines]  
     nlines=[string.replace('txt=()', "txt=('"+qmscr+"_%s_%.3f.out')" % (name, h[k])) for string in nlines]
