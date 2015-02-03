@@ -57,7 +57,7 @@ for name in b:
     scrpy=open(qmscr+'_%s_%.3f.py' %  (name, h[k]), 'w')   
     nlines=[string.replace("molecule=read()", "molecule=read('"+qmscr+"_%s_%.3f.xyz')" % (name, h[k])) for string in nlines]
     nlines=[string.replace('basis=', "basis='%s'" % (b[name])) for string in nlines]
-    nlines=[string.replace('h=', 'h=%.3f' % (h[k])) for string in nlines]  
+    nlines=[string.replace('h=,', 'h=%.3f,' % (h[k])) for string in nlines]  
     nlines=[string.replace('txt=()', "txt=('"+qmscr+"_%s_%.3f.out')" % (name, h[k])) for string in nlines]
     nlines=[string.replace('open()', "open('"+qmscr+"_%s_%.3f.txt', 'w')" % (name, h[k])) for string in nlines]
     nlines=[string.replace('trajectory=', "trajectory='"+qmscr+"_%s_%.3f.traj'" % (name, h[k])) for string in nlines]
