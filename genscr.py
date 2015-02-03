@@ -44,8 +44,9 @@ for n,line in enumerate(p):
     bnames=[basis.replace('(', '') for basis in bnames]
     bnames=[basis.replace(')', '') for basis in bnames]
     b={}
-    for name, basis in zip(bnames, p[:n-1]):
-      b[name]=basis
+    t=0
+    for name in bnames:
+      b[name]=p[t]; t+=1
 
 
 for name in b: 
