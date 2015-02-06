@@ -32,6 +32,9 @@ p=pr.readlines(); pr.close()
 coord=open(pos, 'r')
 positions=coord.readlines(); coord.close()
 
+if 'Progression' not in open(param).read():
+  print 'Missing input keywords in the parameters file, check your inputs!'; sys.exit(1)
+
 for n,line in enumerate(p):
   if 'Progression' in line:
     sp=[float(x) for x in p[n+2].split()] 
@@ -39,6 +42,8 @@ for n,line in enumerate(p):
       h=prog.geomprog(sp[0], sp[1], sp[2])
     elif 'art' in line:
       h=prog.artprog(sp[0], sp[1], sp[2])
+    else:
+      print 'Missing input keywords in the parameters file, check your inputs!'; sys.exit(1)   
     p[:n-1]=[basis.strip() for basis in p[:n-1]]
     bnames=p[:n-1]
     bnames=[basis.replace('(', '') for basis in bnames]
@@ -47,7 +52,6 @@ for n,line in enumerate(p):
     t=0
     for name in bnames:
       b[name]=p[t]; t+=1
-
 
 for name in b: 
   for k in range(len(h)):
